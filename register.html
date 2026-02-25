@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>File Grievance — Jan Awaaz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><span class="logo-icon">⚖</span><span>Jan <strong>Awaaz</strong></span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="register.html" class="active">File Grievance</a></li>
+      <li><a href="track.html">Track Status</a></li>
+      <li><a href="feedback.html">Feedback</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+    </ul>
+    <a href="login.html" class="btn-outline">Officer Login</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="badge">📝 Grievance Registration</div>
+  <h1>File Your Grievance</h1>
+  <p>Complete the form below. All fields marked * are required.</p>
+</div>
+
+<section class="form-section">
+  <div class="form-card">
+    <!-- Step Indicator -->
+    <div class="steps-indicator" style="display:flex;gap:0;margin-bottom:2.5rem;">
+      <div class="step-tab active" data-step="1" style="flex:1;padding:.75rem;text-align:center;background:#e63946;color:#fff;border-radius:10px 0 0 10px;font-size:.85rem;font-weight:700;">1. Verify Mobile</div>
+      <div class="step-tab" data-step="2" style="flex:1;padding:.75rem;text-align:center;background:#f5f5f5;color:#888;font-size:.85rem;font-weight:600;">2. Grievance Details</div>
+      <div class="step-tab" data-step="3" style="flex:1;padding:.75rem;text-align:center;background:#f5f5f5;color:#888;border-radius:0 10px 10px 0;font-size:.85rem;font-weight:600;">3. Review & Submit</div>
+    </div>
+
+    <!-- Step 1: OTP Verification -->
+    <div id="step1">
+      <h2 class="form-title">📱 Mobile Verification</h2>
+      <div class="disclaimer-box">
+        <h4>⚠ Note: Complaints in the following categories will NOT be accepted</h4>
+        <ul>
+          <li>Matters related to Right to Information (RTI)</li>
+          <li>Cases sub-judice (pending in court)</li>
+          <li>Suggestions or demands for financial aid / employment</li>
+          <li>Service matters of government employees (unless all departmental options exhausted)</li>
+        </ul>
+      </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="agree" />
+        <label for="agree">I confirm that my grievance does not fall under any of the above categories and the information provided is correct.</label>
+      </div>
+
+      <div class="form-group">
+        <label>Full Name *</label>
+        <input type="text" id="fullname" placeholder="Enter your full name"/>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Mobile Number *</label>
+          <div class="otp-row">
+            <input type="tel" id="mobile" maxlength="10" placeholder="10-digit mobile number"/>
+            <button class="otp-btn" onclick="sendOTP()">Send OTP</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="email" placeholder="your@email.com"/>
+        </div>
+      </div>
+      <div class="form-group" id="otp-section" style="display:none;">
+        <label>Enter OTP *</label>
+        <div class="otp-row">
+          <input type="text" id="otp" maxlength="6" placeholder="6-digit OTP"/>
+          <button class="otp-btn" onclick="verifyOTP()">Verify OTP</button>
+        </div>
+        <p style="font-size:.8rem;color:#888;margin-top:.4rem;">OTP sent to your mobile. Valid for 5 minutes. <span id="timer"></span></p>
+      </div>
+      <button class="btn-primary form-submit" onclick="proceedStep2()" id="step1btn" disabled>Continue →</button>
+    </div>
+
+    <!-- Step 2: Details -->
+    <div id="step2" style="display:none;">
+      <h2 class="form-title">📋 Grievance Details</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label>State *</label>
+          <select id="state">
+            <option value="">Select State</option>
+            <option>Uttar Pradesh</option><option>Delhi</option><option>Maharashtra</option>
+            <option>Gujarat</option><option>Rajasthan</option><option>Bihar</option>
+            <option>Madhya Pradesh</option><option>Tamil Nadu</option><option>Karnataka</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>District *</label>
+          <select id="district">
+            <option value="">Select District</option>
+            <option>Lucknow</option><option>Kanpur</option><option>Agra</option>
+            <option>Varanasi</option><option>Prayagraj</option><option>Noida</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Department *</label>
+          <select id="department">
+            <option value="">Select Department</option>
+            <option>Health & Family Welfare</option>
+            <option>Education</option>
+            <option>Public Works Department</option>
+            <option>Revenue</option>
+            <option>Police</option>
+            <option>Rural Development</option>
+            <option>Urban Development</option>
+            <option>Agriculture</option>
+            <option>Food & Civil Supplies</option>
+            <option>Water Resources</option>
+            <option>Electricity</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Grievance Category *</label>
+          <select id="category">
+            <option value="">Select Category</option>
+            <option>Service Delay</option>
+            <option>Corruption / Bribery</option>
+            <option>Infrastructure Issue</option>
+            <option>Land Dispute</option>
+            <option>Pension / Benefits</option>
+            <option>Law & Order</option>
+            <option>Sanitation</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Subject of Grievance *</label>
+        <input type="text" id="subject" maxlength="150" placeholder="Brief subject of your complaint (max 150 chars)" oninput="updateCount(this,'subCount',150)"/>
+        <div class="char-count"><span id="subCount">0</span>/150</div>
+      </div>
+      <div class="form-group">
+        <label>Detailed Description *</label>
+        <textarea id="description" maxlength="1200" placeholder="Describe your grievance in detail. Include dates, locations, and names of officials involved if applicable." oninput="updateCount(this,'descCount',1200)"></textarea>
+        <div class="char-count"><span id="descCount">0</span>/1200</div>
+      </div>
+      <div class="form-group">
+        <label>Supporting Documents (optional)</label>
+        <label class="file-upload" for="fileUpload">
+          <div class="file-upload-icon">📎</div>
+          <p>Drag & drop files or <span>Browse</span></p>
+          <p style="font-size:.75rem;margin-top:.4rem;">PDF, JPG, PNG — Max 5MB each, up to 3 files</p>
+          <input type="file" id="fileUpload" multiple accept=".pdf,.jpg,.jpeg,.png"/>
+        </label>
+        <div id="fileList"></div>
+      </div>
+      <div style="display:flex;gap:1rem;">
+        <button class="btn-outline" onclick="goStep(1)" style="flex:1;padding:1rem;">← Back</button>
+        <button class="btn-primary form-submit" onclick="proceedStep3()" style="flex:2;">Review Grievance →</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Review -->
+    <div id="step3" style="display:none;">
+      <h2 class="form-title">✅ Review & Submit</h2>
+      <div id="review-content" style="background:#f9f9f9;border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;">
+        <!-- Populated by JS -->
+      </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="declare"/>
+        <label for="declare">I hereby declare that the information provided is true to the best of my knowledge. I understand that providing false information is a punishable offence.</label>
+      </div>
+      <div style="display:flex;gap:1rem;margin-top:1.5rem;">
+        <button class="btn-outline" onclick="goStep(2)" style="flex:1;padding:1rem;">← Edit</button>
+        <button class="btn-primary form-submit" onclick="submitGrievance()" style="flex:2;">Submit Grievance 🚀</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Success Modal -->
+<div id="successModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9998;display:flex;align-items:center;justify-content:center;flex-direction:column;">
+  <div style="background:#fff;border-radius:24px;padding:3rem;text-align:center;max-width:420px;margin:1rem;animation:popIn .4s ease;">
+    <div style="font-size:4rem;margin-bottom:1rem;">🎉</div>
+    <h2 style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;margin-bottom:.8rem;">Grievance Submitted!</h2>
+    <p style="color:#888;margin-bottom:1.5rem;">Your grievance has been registered. Track its progress using your Reference ID below.</p>
+    <div style="background:#fff5f5;border:2px dashed #e63946;border-radius:12px;padding:1.2rem;margin-bottom:1.5rem;">
+      <p style="font-size:.85rem;color:#888;">Reference ID</p>
+      <p id="refId" style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:#e63946;letter-spacing:.05em;"></p>
+    </div>
+    <p style="font-size:.85rem;color:#888;margin-bottom:1.5rem;">An SMS with your reference ID has been sent to your mobile number.</p>
+    <a href="track.html" class="btn-primary" style="display:inline-block;padding:.85rem 2rem;">Track My Grievance</a>
+  </div>
+</div>
+<div id="successBg" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9997;" onclick="closeModal()"></div>
+
+<style>
+@keyframes popIn { from { transform: scale(.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.step-tab { cursor: pointer; transition: all .3s; }
+</style>
+
+<div id="toast" class="toast"><span class="toast-icon">✅</span><span id="toastMsg">Message</span></div>
+
+<footer class="footer">
+  <div class="footer-bottom"><p>© 2025 Jan Awaaz Portal. All rights reserved.</p></div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+let otpVerified = false;
+let timerInterval;
+
+function sendOTP() {
+  const mob = document.getElementById('mobile').value;
+  if (!/^\d{10}$/.test(mob)) { showToast('Enter a valid 10-digit mobile number', 'error'); return; }
+  document.getElementById('otp-section').style.display = 'block';
+  showToast('OTP sent to ' + mob, 'success');
+  startTimer(300);
+  console.log('[Backend] POST /api/send-otp { mobile: ' + mob + ' }');
+}
+
+function startTimer(sec) {
+  clearInterval(timerInterval);
+  const el = document.getElementById('timer');
+  timerInterval = setInterval(() => {
+    const m = Math.floor(sec/60), s = sec % 60;
+    el.textContent = m + ':' + String(s).padStart(2,'0');
+    if (--sec < 0) { clearInterval(timerInterval); el.textContent = 'Expired'; }
+  }, 1000);
+}
+
+function verifyOTP() {
+  const otp = document.getElementById('otp').value;
+  if (otp.length !== 6) { showToast('Enter 6-digit OTP', 'error'); return; }
+  // Simulate backend verification (any 6 digits pass for demo)
+  otpVerified = true;
+  document.getElementById('step1btn').disabled = false;
+  showToast('Mobile verified successfully!', 'success');
+  console.log('[Backend] POST /api/verify-otp { otp: ' + otp + ' }');
+}
+
+function proceedStep2() {
+  if (!document.getElementById('agree').checked) { showToast('Please agree to the terms first', 'error'); return; }
+  if (!otpVerified) { showToast('Please verify your mobile first', 'error'); return; }
+  if (!document.getElementById('fullname').value.trim()) { showToast('Enter your full name', 'error'); return; }
+  goStep(2);
+}
+
+function proceedStep3() {
+  const required = ['state','district','department','category','subject','description'];
+  for (let id of required) {
+    if (!document.getElementById(id).value.trim()) {
+      showToast('Please fill all required fields', 'error'); return;
+    }
+  }
+  // Build review
+  const data = {
+    name: document.getElementById('fullname').value,
+    mobile: document.getElementById('mobile').value,
+    email: document.getElementById('email').value || 'Not provided',
+    state: document.getElementById('state').value,
+    district: document.getElementById('district').value,
+    department: document.getElementById('department').value,
+    category: document.getElementById('category').value,
+    subject: document.getElementById('subject').value,
+    description: document.getElementById('description').value,
+  };
+  document.getElementById('review-content').innerHTML = Object.entries({
+    'Full Name': data.name, 'Mobile': data.mobile, 'Email': data.email,
+    'State': data.state, 'District': data.district, 'Department': data.department,
+    'Category': data.category, 'Subject': data.subject
+  }).map(([k,v]) => `<div style="display:flex;gap:1rem;padding:.6rem 0;border-bottom:1px solid #eee;">
+    <span style="font-size:.8rem;color:#888;min-width:120px;">${k}</span>
+    <span style="font-size:.9rem;font-weight:500;">${v}</span>
+  </div>`).join('') +
+  `<div style="padding:.6rem 0;"><span style="font-size:.8rem;color:#888;display:block;margin-bottom:.3rem;">Description</span>
+  <span style="font-size:.9rem;">${data.description}</span></div>`;
+  goStep(3);
+}
+
+function submitGrievance() {
+  if (!document.getElementById('declare').checked) { showToast('Please accept the declaration', 'error'); return; }
+  const refId = 'JA' + Date.now().toString().slice(-8);
+  document.getElementById('refId').textContent = refId;
+  
+  // Simulate backend submission
+  const payload = {
+    mobile: document.getElementById('mobile').value,
+    name: document.getElementById('fullname').value,
+    department: document.getElementById('department').value,
+    subject: document.getElementById('subject').value,
+    description: document.getElementById('description').value,
+    refId
+  };
+  console.log('[Backend] POST /api/grievances', payload);
+  
+  // Save to localStorage for demo tracking
+  const grievances = JSON.parse(localStorage.getItem('grievances') || '[]');
+  grievances.push({ ...payload, status: 'Pending', date: new Date().toLocaleDateString(), timeline: [
+    { title: 'Grievance Registered', date: new Date().toLocaleDateString(), note: 'Your grievance has been successfully registered.' }
+  ]});
+  localStorage.setItem('grievances', JSON.stringify(grievances));
+  
+  document.getElementById('successModal').style.display = 'flex';
+  document.getElementById('successBg').style.display = 'block';
+}
+
+function closeModal() {
+  document.getElementById('successModal').style.display = 'none';
+  document.getElementById('successBg').style.display = 'none';
+}
+
+function goStep(n) {
+  ['step1','step2','step3'].forEach((id,i) => document.getElementById(id).style.display = i+1===n ? 'block' : 'none');
+  document.querySelectorAll('.step-tab').forEach((tab,i) => {
+    tab.style.background = i+1===n ? '#e63946' : '#f5f5f5';
+    tab.style.color = i+1===n ? '#fff' : '#888';
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function updateCount(el, countId, max) {
+  document.getElementById(countId).textContent = el.value.length;
+}
+
+document.getElementById('fileUpload').addEventListener('change', function() {
+  const list = document.getElementById('fileList');
+  list.innerHTML = Array.from(this.files).map(f =>
+    `<div style="display:flex;align-items:center;gap:.5rem;padding:.4rem .8rem;background:#f0f0f0;border-radius:6px;margin-top:.5rem;font-size:.85rem;">
+      📄 ${f.name} <span style="color:#888;">(${(f.size/1024).toFixed(1)}KB)</span>
+    </div>`
+  ).join('');
+});
+</script>
+</body>
+</html>

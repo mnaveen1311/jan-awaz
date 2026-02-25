@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Track Grievance — Jan Awaaz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><span class="logo-icon">⚖</span><span>Jan <strong>Awaaz</strong></span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="register.html">File Grievance</a></li>
+      <li><a href="track.html" class="active">Track Status</a></li>
+      <li><a href="feedback.html">Feedback</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+    </ul>
+    <a href="login.html" class="btn-outline">Officer Login</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="badge">🔍 Grievance Tracker</div>
+  <h1>Track Your Grievance</h1>
+  <p>Enter your reference ID or registered mobile number to check the status of your complaint.</p>
+</div>
+
+<section class="form-section">
+  <div class="form-card track-card">
+    <h2 class="form-title">🔎 Search Your Grievance</h2>
+
+    <div style="display:flex;gap:.5rem;margin-bottom:1.5rem;">
+      <button class="tab-btn active" id="tabRef" onclick="switchTab('ref')">By Reference ID</button>
+      <button class="tab-btn" id="tabMob" onclick="switchTab('mob')">By Mobile Number</button>
+    </div>
+
+    <div id="refSearch">
+      <div class="form-group">
+        <label>Reference / Grievance ID *</label>
+        <input type="text" id="refInput" placeholder="e.g. JA12345678" style="text-transform:uppercase;"/>
+      </div>
+      <button class="btn-primary form-submit" onclick="trackByRef()">Search Grievance →</button>
+    </div>
+
+    <div id="mobSearch" style="display:none;">
+      <div class="form-group">
+        <label>Registered Mobile Number *</label>
+        <div class="otp-row">
+          <input type="tel" id="mobInput" maxlength="10" placeholder="10-digit number"/>
+          <button class="otp-btn" onclick="sendTrackOTP()">Send OTP</button>
+        </div>
+      </div>
+      <div id="trackOtpSection" style="display:none;" class="form-group">
+        <label>OTP *</label>
+        <div class="otp-row">
+          <input type="text" id="trackOtp" maxlength="6" placeholder="6-digit OTP"/>
+          <button class="otp-btn" onclick="verifyTrackOTP()">Verify</button>
+        </div>
+      </div>
+      <button class="btn-primary form-submit" onclick="trackByMobile()">View All Grievances →</button>
+    </div>
+
+    <!-- Results -->
+    <div class="track-result" id="trackResult" style="display:none;"></div>
+  </div>
+</section>
+
+<style>
+.tab-btn {
+  flex: 1; padding: .65rem 1rem;
+  border: 1.5px solid #e5e5e5; background: #f5f5f5;
+  border-radius: 10px; font-family: 'DM Sans', sans-serif;
+  font-size: .9rem; font-weight: 600; cursor: pointer; transition: all .2s;
+}
+.tab-btn.active { background: #0d0d0d; color: #fff; border-color: #0d0d0d; }
+</style>
+
+<div id="toast" class="toast"><span class="toast-icon">ℹ</span><span id="toastMsg">Message</span></div>
+
+<footer class="footer">
+  <div class="footer-bottom"><p>© 2025 Jan Awaaz Portal. All rights reserved.</p></div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+function switchTab(tab) {
+  document.getElementById('refSearch').style.display = tab==='ref' ? 'block' : 'none';
+  document.getElementById('mobSearch').style.display = tab==='mob' ? 'block' : 'none';
+  document.getElementById('tabRef').classList.toggle('active', tab==='ref');
+  document.getElementById('tabMob').classList.toggle('active', tab==='mob');
+  document.getElementById('trackResult').style.display = 'none';
+}
+
+function trackByRef() {
+  const ref = document.getElementById('refInput').value.trim().toUpperCase();
+  if (!ref.startsWith('JA') || ref.length < 8) { showToast('Enter a valid Reference ID (e.g. JA12345678)', 'error'); return; }
+  
+  // Check localStorage first (for grievances filed in this session)
+  const grievances = JSON.parse(localStorage.getItem('grievances') || '[]');
+  const found = grievances.find(g => g.refId === ref);
+  
+  if (found) {
+    renderResult(found);
+  } else {
+    // Simulate backend response for demo
+    const demo = {
+      refId: ref, name: 'Demo Citizen', mobile: 'XXXXXXXXXX',
+      department: 'Public Works Department', subject: 'Road repair needed on Main Street',
+      status: 'In Progress', date: '15 Jan 2025',
+      timeline: [
+        { title: 'Grievance Registered', date: '15 Jan 2025', note: 'Successfully submitted.' },
+        { title: 'Assigned to Officer', date: '17 Jan 2025', note: 'Routed to PWD District Officer, Lucknow.' },
+        { title: 'Site Inspection Done', date: '21 Jan 2025', note: 'Field verification completed.' },
+        { title: 'Action Pending', date: '25 Jan 2025', note: 'Work order issued. Awaiting execution.' }
+      ]
+    };
+    renderResult(demo);
+  }
+}
+
+function sendTrackOTP() {
+  const mob = document.getElementById('mobInput').value;
+  if (!/^\d{10}$/.test(mob)) { showToast('Enter a valid 10-digit mobile number', 'error'); return; }
+  document.getElementById('trackOtpSection').style.display = 'block';
+  showToast('OTP sent to ' + mob, 'success');
+}
+
+function verifyTrackOTP() {
+  showToast('Mobile verified!', 'success');
+}
+
+function trackByMobile() {
+  const mob = document.getElementById('mobInput').value;
+  if (!/^\d{10}$/.test(mob)) { showToast('Enter your registered mobile number', 'error'); return; }
+  
+  const grievances = JSON.parse(localStorage.getItem('grievances') || '[]');
+  const userGrievances = grievances.filter(g => g.mobile === mob);
+  
+  const result = document.getElementById('trackResult');
+  result.style.display = 'block';
+  
+  if (userGrievances.length === 0) {
+    // Demo
+    result.innerHTML = `<div style="text-align:center;padding:2rem;color:#888;">
+      <div style="font-size:3rem;margin-bottom:1rem;">📭</div>
+      <p>No grievances found for this mobile number.</p>
+      <a href="register.html" class="btn-primary" style="display:inline-block;margin-top:1rem;padding:.75rem 1.5rem;">File a Grievance</a>
+    </div>`;
+    return;
+  }
+  
+  result.innerHTML = userGrievances.map(g => buildCard(g)).join('');
+}
+
+function renderResult(g) {
+  const result = document.getElementById('trackResult');
+  result.style.display = 'block';
+  result.innerHTML = buildCard(g);
+}
+
+function buildCard(g) {
+  const statusClass = g.status === 'Resolved' ? 'badge-resolved' : g.status === 'In Progress' ? 'badge-progress' : 'badge-pending';
+  const timeline = (g.timeline || []).map(t => `
+    <div class="tl-item">
+      <h4>${t.title}</h4>
+      <p>${t.date} — ${t.note}</p>
+    </div>
+  `).join('');
+
+  return `<div class="status-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem;margin-bottom:1.2rem;">
+      <div>
+        <p style="font-size:.8rem;color:#888;margin-bottom:.2rem;">Reference ID</p>
+        <p style="font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;">${g.refId}</p>
+      </div>
+      <span class="status-badge ${statusClass}">${g.status}</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid #eee;">
+      ${[['Subject', g.subject],['Department', g.department],['Filed On', g.date],['Name', g.name]].map(([k,v]) =>
+        `<div><p style="font-size:.75rem;color:#888;">${k}</p><p style="font-size:.9rem;font-weight:500;">${v}</p></div>`
+      ).join('')}
+    </div>
+    <h4 style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:1rem;">📍 Progress Timeline</h4>
+    <div class="timeline">${timeline}</div>
+    ${g.status !== 'Resolved' ? `<div style="margin-top:1.5rem;display:flex;gap:1rem;flex-wrap:wrap;">
+      <a href="reminder.html" class="btn-primary" style="padding:.65rem 1.5rem;font-size:.9rem;">Send Reminder 🔔</a>
+      <a href="feedback.html" class="btn-outline" style="padding:.65rem 1.5rem;font-size:.9rem;">Give Feedback</a>
+    </div>` : `<div style="margin-top:1.5rem;background:#d1fae5;border-radius:10px;padding:1rem;color:#065f46;font-weight:600;">
+      ✅ Your grievance has been resolved. Please provide feedback.
+      <a href="feedback.html" style="display:block;margin-top:.5rem;color:#047857;">Rate this resolution →</a>
+    </div>`}
+  </div>`;
+}
+</script>
+</body>
+</html>

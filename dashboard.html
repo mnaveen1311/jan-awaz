@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard — Jan Awaaz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><span class="logo-icon">⚖</span><span>Jan <strong>Awaaz</strong></span></a>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:1rem;">
+      <span style="font-size:.9rem;color:#888;">👮 Rajiv Kumar Sharma — PWD Officer</span>
+      <a href="login.html" class="btn-outline">Logout</a>
+    </div>
+  </div>
+</nav>
+
+<div class="dashboard">
+  <aside class="sidebar">
+    <p class="sidebar-title">Navigation</p>
+    <nav class="sidebar-nav">
+      <a href="#" class="active"><span>📊</span> Dashboard</a>
+      <a href="#"><span>📋</span> All Grievances</a>
+      <a href="#"><span>⏳</span> Pending</a>
+      <a href="#"><span>🔄</span> In Progress</a>
+      <a href="#"><span>✅</span> Resolved</a>
+      <a href="#"><span>🔔</span> Reminders</a>
+      <a href="#"><span>📈</span> Reports</a>
+      <a href="#"><span>⚙</span> Settings</a>
+    </nav>
+    <div style="margin-top:auto;padding-top:2rem;border-top:1px solid rgba(255,255,255,.1);">
+      <p style="font-size:.75rem;color:rgba(255,255,255,.3);">Last login: Today, 9:12 AM</p>
+    </div>
+  </aside>
+
+  <main class="dash-main">
+    <h1 class="dash-greeting">Good morning, Rajiv 👋</h1>
+
+    <div class="dash-grid">
+      <div class="dash-card" style="border-top:3px solid #e63946;">
+        <div class="d-num" style="color:#e63946;">47</div>
+        <div class="d-label">Total Assigned</div>
+      </div>
+      <div class="dash-card" style="border-top:3px solid #f5a623;">
+        <div class="d-num" style="color:#f5a623;">18</div>
+        <div class="d-label">Pending</div>
+      </div>
+      <div class="dash-card" style="border-top:3px solid #457b9d;">
+        <div class="d-num" style="color:#457b9d;">12</div>
+        <div class="d-label">In Progress</div>
+      </div>
+      <div class="dash-card" style="border-top:3px solid #00c896;">
+        <div class="d-num" style="color:#00c896;">17</div>
+        <div class="d-label">Resolved</div>
+      </div>
+    </div>
+
+    <!-- Urgent Grievances -->
+    <div class="table-card" style="margin-bottom:1.5rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+        <h3>🔥 Urgent / Overdue Grievances</h3>
+        <span style="background:#ffe5e7;color:#e63946;font-size:.75rem;font-weight:700;padding:.3rem .8rem;border-radius:100px;">3 Overdue</span>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Ref ID</th><th>Subject</th><th>Citizen</th><th>Department</th><th>Days Overdue</th><th>Action</th></tr>
+        </thead>
+        <tbody id="urgentTable">
+          <!-- Populated by JS -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- All Grievances -->
+    <div class="table-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+        <h3>📋 All Assigned Grievances</h3>
+        <div style="display:flex;gap:.75rem;flex-wrap:wrap;">
+          <select id="filterStatus" style="border:1.5px solid #e5e5e5;border-radius:8px;padding:.4rem .8rem;font-family:'DM Sans',sans-serif;font-size:.85rem;" onchange="filterGrievances()">
+            <option value="">All Status</option>
+            <option>Pending</option><option>In Progress</option><option>Resolved</option>
+          </select>
+          <input type="text" id="searchInput" placeholder="Search..." style="border:1.5px solid #e5e5e5;border-radius:8px;padding:.4rem .8rem;font-family:'DM Sans',sans-serif;font-size:.85rem;" oninput="filterGrievances()"/>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Ref ID</th><th>Subject</th><th>Citizen</th><th>Filed On</th><th>Status</th><th>Action</th></tr>
+        </thead>
+        <tbody id="grievanceTable">
+          <!-- Populated by JS -->
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<!-- Update Modal -->
+<div id="updateModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:20px;padding:2.5rem;max-width:500px;width:90%;position:relative;">
+    <h3 style="font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;margin-bottom:1.5rem;">Update Grievance Status</h3>
+    <input type="hidden" id="updateRefId"/>
+    <div class="form-group">
+      <label>New Status</label>
+      <select id="newStatus">
+        <option>Pending</option><option>In Progress</option><option>Resolved</option><option>Escalated</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Remarks / Action Taken</label>
+      <textarea id="remarks" placeholder="Describe the action taken..." style="border:1.5px solid #e5e5e5;border-radius:10px;padding:.75rem;font-family:'DM Sans',sans-serif;min-height:100px;width:100%;"></textarea>
+    </div>
+    <div style="display:flex;gap:1rem;">
+      <button onclick="closeUpdateModal()" class="btn-outline" style="flex:1;padding:.75rem;">Cancel</button>
+      <button onclick="saveUpdate()" class="btn-primary" style="flex:2;padding:.75rem;border-radius:10px;">Save Update</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"><span class="toast-icon">ℹ</span><span id="toastMsg">Message</span></div>
+<style>
+#updateModal { display: none; }
+#updateModal.visible { display: flex; }
+</style>
+
+<script src="app.js"></script>
+<script>
+const allGrievances = [
+  { refId:'JA00123456', subject:'Broken streetlights on Ring Road', name:'Priya Sharma', date:'10 Jan 2025', status:'Pending', overdue:5 },
+  { refId:'JA00123457', subject:'Water supply disruption in Sector 7', name:'Mohan Das', date:'8 Jan 2025', status:'In Progress', overdue:3 },
+  { refId:'JA00123458', subject:'Road repair needed after monsoon', name:'Anita Singh', date:'5 Jan 2025', status:'Pending', overdue:8 },
+  { refId:'JA00123459', subject:'School building roof leakage', name:'Ramesh Verma', date:'12 Jan 2025', status:'In Progress', overdue:0 },
+  { refId:'JA00123460', subject:'Pension not received for 3 months', name:'Savitri Devi', date:'14 Jan 2025', status:'Pending', overdue:0 },
+  { refId:'JA00123461', subject:'Illegal construction blocking road', name:'Vijay Kumar', date:'3 Jan 2025', status:'Resolved', overdue:0 },
+  { refId:'JA00123462', subject:'Ration shop overcharging', name:'Rekha Yadav', date:'15 Jan 2025', status:'Resolved', overdue:0 },
+];
+
+function statusBadge(s) {
+  const map = { Pending:'badge-pending', 'In Progress':'badge-progress', Resolved:'badge-resolved', Escalated:'badge-pending' };
+  return `<span class="status-badge ${map[s]||'badge-pending'}">${s}</span>`;
+}
+
+function renderTable(data) {
+  const tbody = document.getElementById('grievanceTable');
+  tbody.innerHTML = data.map(g => `<tr>
+    <td style="font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;">${g.refId}</td>
+    <td style="max-width:200px;">${g.subject}</td>
+    <td>${g.name}</td>
+    <td>${g.date}</td>
+    <td>${statusBadge(g.status)}</td>
+    <td>
+      <button onclick="openUpdate('${g.refId}')" style="background:#0d0d0d;color:#fff;border:none;border-radius:8px;padding:.4rem .9rem;font-size:.8rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">
+        Update
+      </button>
+    </td>
+  </tr>`).join('');
+}
+
+function renderUrgent() {
+  const urgent = allGrievances.filter(g => g.overdue > 0);
+  document.getElementById('urgentTable').innerHTML = urgent.map(g => `<tr>
+    <td style="font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;">${g.refId}</td>
+    <td>${g.subject}</td>
+    <td>${g.name}</td>
+    <td>PWD</td>
+    <td><span style="background:#ffe5e7;color:#e63946;font-weight:700;padding:.25rem .7rem;border-radius:100px;font-size:.8rem;">${g.overdue} days</span></td>
+    <td><button onclick="openUpdate('${g.refId}')" style="background:#e63946;color:#fff;border:none;border-radius:8px;padding:.4rem .9rem;font-size:.8rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">Resolve Now</button></td>
+  </tr>`).join('');
+}
+
+function filterGrievances() {
+  const status = document.getElementById('filterStatus').value;
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const filtered = allGrievances.filter(g =>
+    (!status || g.status === status) &&
+    (!q || g.subject.toLowerCase().includes(q) || g.refId.toLowerCase().includes(q) || g.name.toLowerCase().includes(q))
+  );
+  renderTable(filtered);
+}
+
+function openUpdate(refId) {
+  document.getElementById('updateRefId').value = refId;
+  document.getElementById('updateModal').classList.add('visible');
+}
+function closeUpdateModal() { document.getElementById('updateModal').classList.remove('visible'); }
+function saveUpdate() {
+  const refId = document.getElementById('updateRefId').value;
+  const status = document.getElementById('newStatus').value;
+  const remarks = document.getElementById('remarks').value;
+  if (!remarks.trim()) { showToast('Please add remarks', 'error'); return; }
+  
+  // Update local data
+  const g = allGrievances.find(x => x.refId === refId);
+  if (g) g.status = status;
+  
+  renderTable(allGrievances);
+  renderUrgent();
+  closeUpdateModal();
+  showToast(`${refId} updated to "${status}"`, 'success');
+  console.log('[Backend] PATCH /api/grievances/' + refId, { status, remarks });
+}
+
+renderTable(allGrievances);
+renderUrgent();
+</script>
+</body>
+</html>

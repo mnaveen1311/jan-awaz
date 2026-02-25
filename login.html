@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Officer Login — Jan Awaaz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><span class="logo-icon">⚖</span><span>Jan <strong>Awaaz</strong></span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="register.html">File Grievance</a></li>
+      <li><a href="track.html">Track Status</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="login-wrap">
+  <div class="login-left">
+    <div class="badge" style="margin-bottom:2rem;">🔐 Secure Portal</div>
+    <h2>Officer Dashboard</h2>
+    <p style="margin-bottom:2rem;">Access your assigned grievances, update statuses, and coordinate resolutions across departments.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:1.2rem;">
+        <div style="font-size:1.8rem;font-weight:800;font-family:'Syne',sans-serif;color:#ffd166;">124</div>
+        <div style="font-size:.8rem;color:rgba(255,255,255,.5);margin-top:.3rem;">Assigned Today</div>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:1.2rem;">
+        <div style="font-size:1.8rem;font-weight:800;font-family:'Syne',sans-serif;color:#00c896;">96%</div>
+        <div style="font-size:.8rem;color:rgba(255,255,255,.5);margin-top:.3rem;">Resolution Rate</div>
+      </div>
+    </div>
+  </div>
+  <div class="login-right">
+    <div class="login-box">
+      <div style="font-size:2.5rem;margin-bottom:1rem;">⚖</div>
+      <h3>Sign In</h3>
+      <p style="color:#888;font-size:.9rem;margin-bottom:2rem;">Enter your official credentials to access the dashboard.</p>
+      <div class="form-group">
+        <label>Employee ID / Username *</label>
+        <input type="text" id="username" placeholder="Enter your Employee ID"/>
+      </div>
+      <div class="form-group">
+        <label>Password *</label>
+        <input type="password" id="password" placeholder="Enter your password"/>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+        <label style="display:flex;align-items:center;gap:.5rem;font-size:.85rem;cursor:pointer;">
+          <input type="checkbox"/> Remember me
+        </label>
+        <a href="#" style="font-size:.85rem;color:#e63946;">Forgot password?</a>
+      </div>
+      <button class="btn-primary form-submit" onclick="login()">Sign In →</button>
+      <p style="text-align:center;font-size:.8rem;color:#aaa;margin-top:1.5rem;">
+        Demo: Use any username/password to login
+      </p>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"><span class="toast-icon">ℹ</span><span id="toastMsg">Message</span></div>
+<script src="app.js"></script>
+<script>
+function login() {
+  const u = document.getElementById('username').value;
+  const p = document.getElementById('password').value;
+  if (!u || !p) { showToast('Please enter credentials', 'error'); return; }
+  showToast('Signing in...', 'success');
+  setTimeout(() => { window.location.href = 'dashboard.html'; }, 1000);
+}
+document.addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+</script>
+</body>
+</html>

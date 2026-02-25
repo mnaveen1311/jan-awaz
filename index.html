@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jan Awaaz — Public Grievance Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">⚖</span>
+      <span>Jan <strong>Awaaz</strong></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="register.html">File Grievance</a></li>
+      <li><a href="track.html">Track Status</a></li>
+      <li><a href="feedback.html">Feedback</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+    </ul>
+    <a href="login.html" class="btn-outline">Officer Login</a>
+    <button class="hamburger" id="hamburger">☰</button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="circle c1"></div>
+    <div class="circle c2"></div>
+    <div class="circle c3"></div>
+  </div>
+  <div class="hero-content">
+    <div class="badge">🇮🇳 Government Grievance Portal</div>
+    <h1>Your Voice.<br/><em>Our Priority.</em></h1>
+    <p>Submit, track, and resolve public grievances online. Transparent. Fast. Accountable.</p>
+    <div class="hero-actions">
+      <a href="register.html" class="btn-primary">File a Grievance →</a>
+      <a href="track.html" class="btn-ghost">Track Your Case</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><span class="num" data-target="1248650">0</span><label>Grievances Received</label></div>
+    <div class="stat"><span class="num" data-target="1195320">0</span><label>Resolved</label></div>
+    <div class="stat"><span class="num" data-target="53330">0</span><label>Pending</label></div>
+    <div class="stat"><span class="num" data-target="96">0</span><label>% Resolution Rate</label></div>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="services">
+  <div class="container">
+    <div class="section-header">
+      <span class="tag">Services</span>
+      <h2>What Can We Help You With?</h2>
+    </div>
+    <div class="cards">
+      <a href="register.html" class="card" style="--c:#ff6b35">
+        <div class="card-icon">📝</div>
+        <h3>File Grievance</h3>
+        <p>Register your complaint online with OTP verification. Quick and easy process.</p>
+        <span class="card-link">Get Started →</span>
+      </a>
+      <a href="track.html" class="card" style="--c:#00c896">
+        <div class="card-icon">🔍</div>
+        <h3>Track Status</h3>
+        <p>Monitor real-time progress of your complaint using your registered mobile number.</p>
+        <span class="card-link">Track Now →</span>
+      </a>
+      <a href="reminder.html" class="card" style="--c:#7c4dff">
+        <div class="card-icon">🔔</div>
+        <h3>Send Reminder</h3>
+        <p>If your grievance is unresolved past the deadline, send a follow-up reminder.</p>
+        <span class="card-link">Send Reminder →</span>
+      </a>
+      <a href="feedback.html" class="card" style="--c:#f5a623">
+        <div class="card-icon">💬</div>
+        <h3>Give Feedback</h3>
+        <p>Rate the quality of resolution and help us improve our services.</p>
+        <span class="card-link">Leave Feedback →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section class="how">
+  <div class="container">
+    <div class="section-header">
+      <span class="tag">Process</span>
+      <h2>How It Works</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <h3>Register & Verify</h3>
+          <p>Enter your mobile number and verify with OTP to begin.</p>
+        </div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <h3>Describe Your Issue</h3>
+          <p>Select department, fill in details, and attach supporting documents.</p>
+        </div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <h3>Get Assigned</h3>
+          <p>Your grievance is routed to the appropriate officer automatically.</p>
+        </div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-body">
+          <h3>Resolution</h3>
+          <p>Track progress and receive SMS/email notifications when resolved.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Important Links -->
+<section class="portals">
+  <div class="container">
+    <div class="section-header">
+      <span class="tag">Quick Access</span>
+      <h2>Related Portals</h2>
+    </div>
+    <div class="portal-grid">
+      <div class="portal-card pc1">
+        <h3>Anti-Corruption Portal</h3>
+        <p>Report and track corruption cases against government officials.</p>
+        <a href="#" class="portal-btn">Visit Portal →</a>
+      </div>
+      <div class="portal-card pc2">
+        <h3>Land Encroachment Portal</h3>
+        <p>File complaints regarding illegal land occupation and encroachment.</p>
+        <a href="#" class="portal-btn">Visit Portal →</a>
+      </div>
+      <div class="portal-card pc3">
+        <h3>CM Monitoring System</h3>
+        <p>Chief Minister's direct oversight of critical grievance resolution.</p>
+        <a href="#" class="portal-btn">Visit Portal →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Teaser -->
+<section class="faq-teaser">
+  <div class="container faq-inner">
+    <div class="faq-left">
+      <span class="tag">Help</span>
+      <h2>Frequently Asked Questions</h2>
+      <p>Find quick answers to common questions about filing and tracking grievances.</p>
+      <a href="faq.html" class="btn-primary">View All FAQs →</a>
+    </div>
+    <div class="faq-right">
+      <details class="faq-item">
+        <summary>Who can file a grievance?</summary>
+        <p>Any citizen of India can file a grievance related to government services or public issues.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How long does resolution take?</summary>
+        <p>Most grievances are resolved within 30 working days. You'll receive status updates via SMS.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I file anonymously?</summary>
+        <p>Mobile number verification is required for accountability and to notify you of updates.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What if I'm not satisfied with the resolution?</summary>
+        <p>You can send a reminder or escalate the grievance to higher authorities via our portal.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="logo light">
+        <span class="logo-icon">⚖</span>
+        <span>Jan <strong>Awaaz</strong></span>
+      </a>
+      <p>A public grievance redressal portal powered by the Government.<br/>Empowering citizens with transparency.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="register.html">File Grievance</a></li>
+        <li><a href="track.html">Track Status</a></li>
+        <li><a href="reminder.html">Send Reminder</a></li>
+        <li><a href="feedback.html">Give Feedback</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Information</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+      </ul>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p>For queries, email us at:<br/><strong>janawaaz@gov.in</strong></p>
+      <p>Helpline: <strong>1800-XXX-XXXX</strong></p>
+      <div class="socials">
+        <a href="#" title="Twitter">𝕏</a>
+        <a href="#" title="Facebook">f</a>
+        <a href="#" title="YouTube">▶</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Jan Awaaz Portal. All rights reserved. Designed for the citizens of India.</p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

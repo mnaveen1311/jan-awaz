@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Feedback — Jan Awaaz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><span class="logo-icon">⚖</span><span>Jan <strong>Awaaz</strong></span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="register.html">File Grievance</a></li>
+      <li><a href="track.html">Track Status</a></li>
+      <li><a href="feedback.html" class="active">Feedback</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+    </ul>
+    <a href="login.html" class="btn-outline">Officer Login</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="badge">💬 Citizen Feedback</div>
+  <h1>Your Feedback Matters</h1>
+  <p>Help us improve by rating the resolution quality of your grievance.</p>
+</div>
+
+<section class="form-section">
+  <div class="form-card" style="max-width:600px;">
+    <h2 class="form-title">Rate Your Experience</h2>
+    <div class="form-group">
+      <label>Grievance Reference ID *</label>
+      <input type="text" id="fbRefId" placeholder="e.g. JA12345678" style="text-transform:uppercase;"/>
+    </div>
+    <div class="form-group">
+      <label>Mobile Number *</label>
+      <input type="tel" id="fbMobile" maxlength="10" placeholder="Registered mobile number"/>
+    </div>
+    <div class="form-group">
+      <label>Overall Satisfaction *</label>
+      <div id="stars" style="display:flex;gap:.5rem;margin-top:.3rem;">
+        <span class="star" data-v="1" onclick="rate(1)" style="font-size:2.2rem;cursor:pointer;filter:grayscale(1);transition:filter .2s;">⭐</span>
+        <span class="star" data-v="2" onclick="rate(2)" style="font-size:2.2rem;cursor:pointer;filter:grayscale(1);transition:filter .2s;">⭐</span>
+        <span class="star" data-v="3" onclick="rate(3)" style="font-size:2.2rem;cursor:pointer;filter:grayscale(1);transition:filter .2s;">⭐</span>
+        <span class="star" data-v="4" onclick="rate(4)" style="font-size:2.2rem;cursor:pointer;filter:grayscale(1);transition:filter .2s;">⭐</span>
+        <span class="star" data-v="5" onclick="rate(5)" style="font-size:2.2rem;cursor:pointer;filter:grayscale(1);transition:filter .2s;">⭐</span>
+      </div>
+      <p id="ratingLabel" style="font-size:.85rem;color:#888;margin-top:.4rem;"></p>
+    </div>
+    <div class="form-group">
+      <label>Was your grievance resolved satisfactorily? *</label>
+      <div style="display:flex;gap:1rem;margin-top:.5rem;">
+        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;"><input type="radio" name="resolved" value="yes"/> Yes</label>
+        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;"><input type="radio" name="resolved" value="no"/> No</label>
+        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;"><input type="radio" name="resolved" value="partial"/> Partially</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Additional Comments</label>
+      <textarea id="comments" placeholder="Share your experience with us..." style="resize:vertical;min-height:100px;"></textarea>
+    </div>
+    <button class="btn-primary form-submit" onclick="submitFeedback()">Submit Feedback →</button>
+  </div>
+</section>
+
+<div id="toast" class="toast"><span class="toast-icon">ℹ</span><span id="toastMsg">Message</span></div>
+<script src="app.js"></script>
+<script>
+let selectedRating = 0;
+const labels = ['','Very Poor','Poor','Average','Good','Excellent'];
+
+function rate(n) {
+  selectedRating = n;
+  document.querySelectorAll('.star').forEach((s, i) => {
+    s.style.filter = i < n ? 'none' : 'grayscale(1)';
+  });
+  document.getElementById('ratingLabel').textContent = labels[n];
+}
+
+function submitFeedback() {
+  const refId = document.getElementById('fbRefId').value.trim();
+  const mobile = document.getElementById('fbMobile').value.trim();
+  const resolved = document.querySelector('input[name=resolved]:checked')?.value;
+  
+  if (!refId || !mobile || !selectedRating || !resolved) {
+    showToast('Please fill all required fields and rate your experience', 'error'); return;
+  }
+  
+  console.log('[Backend] POST /api/feedback', { refId, mobile, rating: selectedRating, resolved, comments: document.getElementById('comments').value });
+  showToast('Thank you for your valuable feedback!', 'success');
+  setTimeout(() => { window.location.href = 'index.html'; }, 2000);
+}
+</script>
+
+<footer class="footer">
+  <div class="footer-bottom"><p>© 2025 Jan Awaaz Portal. All rights reserved.</p></div>
+</footer>
+</body>
+</html>
